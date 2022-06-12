@@ -4,10 +4,7 @@ package pl.blukasz.langschool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pl.blukasz.langschool.course.Course;
 import pl.blukasz.langschool.course.CourseService;
@@ -81,11 +78,14 @@ public class HomeController {
     }
 
     @GetMapping("/courses")
-    public String coursesView(Model model){
+    public String coursesView(Model model, HttpServletRequest request){
         List<Course> courses = courseService.getAllCourses();
         model.addAttribute("courses", courses);
-        return "courses.jsp";
+
+        return "courses";
 
     }
+
+
 
 }

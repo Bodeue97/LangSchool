@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin courses</title>
+
+</head>
+<body>
+
+<form action="/courses_admin" method="post">
+
+
+
+
+
+
+<table>
+    <thead>
+    <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Price</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="course: ${courses}">
+        <td th:text="${course.courseName}"/>
+        <td th:text="${course.description}"/>
+        <td th:text="${course.price}"/>
+        <td>
+            <button  name="delete"  th:value="${course.courseName}" type="submit">Delete</button>
+        </td>
+
+
+    </tr>
+    </tbody>
+
+
+</table>
+
+</form>
+
+</body>
+</html>

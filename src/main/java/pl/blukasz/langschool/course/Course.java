@@ -16,7 +16,14 @@ public class Course {
     private String description;
     private Double price;
 
+    public Course() {
+    }
 
+    public Course(String courseName, String description, Double price) {
+        this.courseName = courseName;
+        this.description = description;
+        this.price = price;
+    }
 
     public Long getId() {
         return id;
