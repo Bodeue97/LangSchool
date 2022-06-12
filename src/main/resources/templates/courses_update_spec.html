@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns="http://www.w3.org/1999/xhtml"a
+            xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Course Update</title>
+</head>
+<body>
+
+<form method="post" action="/courses_update_spec">
+    <input type="hidden" name="id" th:field="${course.id}" readonly/>
+    <textarea name="courseName" th:field="${course.courseName}"></textarea>
+    <textarea name="description" th:field="${course.description}"></textarea>
+    <textarea name="price" th:field="${course.price}"></textarea>
+    <button type="submit">Update</button>
+
+
+</form>
+
+</body>
+</html>

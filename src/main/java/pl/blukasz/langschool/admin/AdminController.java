@@ -61,5 +61,39 @@ public class AdminController {
 
     }
 
+    @GetMapping("/courses_update")
+    public String showUpdateCourseView(Model model, HttpServletRequest request){
+        List<Course> courses = courseService.getAllCourses();
+        model.addAttribute("courses", courses);
+
+        return "courses_update";
+    }
+
+    @PostMapping("/courses_update")
+    public String chooseUpdateCourse(HttpServletRequest request, Model model){
+        Course course = courseService.getCourseByName(request.getParameter("edit"));
+       model.addAttribute("course", course);
+        return "courses_update_spec";
+
+
+    }
+
+    @GetMapping("/courses_update_spec")
+    public String updateCourseView(){
+        return "courses_update_spec";
+    }
+
+    @PostMapping("/courses_update_spec")
+    public String updateCourse(HttpServletRequest request){
+
+
+        courseService.updateCourse(Long.valueOf(request.getParameter("id")), request.getParameter("courseName"), request.getParameter("description"), Double.parseDouble(request.getParameter("price")));
+
+        return "course_update_success";
+
+    }
+
+
+
 
 }

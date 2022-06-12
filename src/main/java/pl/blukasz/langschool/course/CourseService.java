@@ -3,6 +3,7 @@ package pl.blukasz.langschool.course;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
@@ -40,6 +41,16 @@ public class CourseService {
     public void deleteCourse(Course course){
         courseRepository.delete(course);
 
+
+    }
+
+    @Transactional
+    public void updateCourse(Long id, String courseName, String description, Double price) throws EntityNotFoundException{
+
+        Course course = courseRepository.findCourseById(id).orElseThrow(()->new EntityNotFoundException("Course with id " + id + " not found"));
+        course.setCourseName(courseName);
+        course.setDescription(description);
+        course.setPrice(price);
 
     }
 
