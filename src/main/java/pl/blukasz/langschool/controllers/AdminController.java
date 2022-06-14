@@ -10,8 +10,6 @@ import pl.blukasz.langschool.course.CourseService;
 import pl.blukasz.langschool.users.User;
 import pl.blukasz.langschool.users.UserRole;
 import pl.blukasz.langschool.users.UserService;
-
-import javax.security.auth.Refreshable;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
