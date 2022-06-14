@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit roles</title>
+
+</head>
+<body>
+<form method="post" action="/edit_user_role">
+
+    <table>
+        <thead>
+        <tr>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Address</th>
+            <th scope="col">Role</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user: ${users}">
+            <td th:text="${user.firstname}"/>
+            <td th:text="${user.lastName}"/>
+            <td th:text="${user.username}"/>
+            <td th:text="${user.address}"/>
+            <td th:text="${user.role}"/>
+            <td>
+                <button  name="setStudent"  th:value="${user.username}" type="submit">Student</button>
+                <button  name="setTeacher"  th:value="${user.username}" type="submit">Teacher</button>
+                <button  name="setClerk"  th:value="${user.username}" type="submit">Clerk</button>
+            </td>
+
+
+
+        </tr>
+        </tbody>
+
+
+    </table>
+</form>
+
+
+
+<button onclick="location.href = 'http://localhost:8080/panel';" id="returnPanel" class="float-left submit-button" >Back</button>
+
+
+</body>
+</html>

@@ -1,15 +1,17 @@
-package pl.blukasz.langschool.admin;
+package pl.blukasz.langschool.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 import pl.blukasz.langschool.course.Course;
 import pl.blukasz.langschool.course.CourseService;
+import pl.blukasz.langschool.users.User;
+import pl.blukasz.langschool.users.UserRole;
+import pl.blukasz.langschool.users.UserService;
 
+import javax.security.auth.Refreshable;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -18,6 +20,9 @@ public class AdminController {
 
     @Autowired
     CourseService courseService;
+
+    @Autowired
+    UserService userService;
 
 
     @GetMapping("/panel/add_course")
@@ -91,8 +96,39 @@ public class AdminController {
 
         return "course_update_success";
 
+
     }
 
+    @GetMapping("/edit_user_role")
+    public String editUserRoleView(Model model){
+        List<User> users = userService.getAllUsers();
+        model.addAttribute("users", users);
+
+
+        return "edit_role_view";
+    }
+
+    @PostMapping("/edit_user_role")
+    public RedirectView editUserRole(HttpServletRequest request){
+
+        if(request.getParameter("setTeacher") != null){
+            userService.editUserRole(UserRole.TEACHER, userService.getUserByUsername(request.getParameter("setTeacher")));
+
+
+        }
+        if(request.getParameter("setStudent") != null){
+            userService.editUserRole(UserRole.STUDENT, userService.getUserByUsername(request.getParameter("setStudent")));
+
+        }
+        if(request.getParameter("setClerk") != null){
+            userService.editUserRole(UserRole.CLERK, userService.getUserByUsername(request.getParameter("setClerk")));
+        }
+
+
+
+        return  new RedirectView("/edit_user_role");
+
+    }
 
 
 

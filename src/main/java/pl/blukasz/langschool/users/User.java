@@ -35,7 +35,7 @@ public class User {
     public User() {
     }
 
-    public User(String name, String lastName, String username, String password, UserRole role, boolean active) {
+    public User(String firstname, String lastName, String username, String password, UserRole role, boolean active) {
         this.firstname = firstname;
         this.lastName = lastName;
         this.username = username;
@@ -57,12 +57,12 @@ public class User {
     }
 
 
-    public String getName() {
+    public String getFirstname() {
         return firstname;
     }
 
-    public void setName(String name) {
-        this.firstname = name;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
     public String getLastName() {

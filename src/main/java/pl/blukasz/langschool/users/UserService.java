@@ -5,6 +5,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,7 +30,7 @@ public class UserService{
 
     public User registerUser(User user)  {
         User registerUser = new User();
-        registerUser.setName(user.getName());
+        registerUser.setFirstname(user.getFirstname());
         registerUser.setLastName(user.getLastName());
         registerUser.setUsername(user.getUsername());
         String password = passwordEncoder.encode(user.getPassword());
@@ -36,6 +38,16 @@ public class UserService{
         registerUser.setActive(true);
         registerUser.setRole(UserRole.STUDENT);
             return userRepository.save(registerUser);
+    }
+
+    public List<User> getAllUsers(){
+      return userRepository.findAll();
+    }
+
+    public void editUserRole(UserRole role, User user){
+        user.setRole(role);
+        userRepository.save(user);
+
     }
 
 

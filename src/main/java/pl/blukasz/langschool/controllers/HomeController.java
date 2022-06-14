@@ -1,4 +1,4 @@
-package pl.blukasz.langschool;
+package pl.blukasz.langschool.controllers;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pl.blukasz.langschool.course.Course;
 import pl.blukasz.langschool.course.CourseService;
+import pl.blukasz.langschool.users.MyUserDetailsService;
 import pl.blukasz.langschool.users.User;
-import pl.blukasz.langschool.users.UserRepository;
+
 import pl.blukasz.langschool.users.UserRole;
 import pl.blukasz.langschool.users.UserService;
 
@@ -26,8 +27,12 @@ public class HomeController {
     @Autowired
     CourseService courseService;
 
+    @Autowired
+    MyUserDetailsService myUserDetailsService;
+
     @GetMapping
     public String homeView(HttpServletRequest request){
+
         if(request.getRemoteUser() != null)
         return "index_logged";
         return "index";
@@ -67,7 +72,7 @@ public class HomeController {
     @PostMapping("/register")
     public String register(HttpServletRequest request){
         User user = new User();
-        user.setName(request.getParameter("firstname"));
+        user.setFirstname((request.getParameter("firstname")));
         user.setLastName(request.getParameter("lastname"));
         user.setUsername(request.getParameter("username"));
         user.setPassword(request.getParameter("password"));
