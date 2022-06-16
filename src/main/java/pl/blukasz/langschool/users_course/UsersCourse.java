@@ -16,8 +16,7 @@ public class UsersCourse {
     private User student;
     @OneToOne
     private Course course;
-    @OneToOne
-    private Grade grade;
+    private Integer grade;
 
 
 
@@ -57,10 +56,10 @@ public class UsersCourse {
     }
 
     public Integer getGrade() {
-        return grade.getGrade();
+        return this.grade;
     }
 
     public void setGrade(Integer grade) {
-        this.grade.setGrade(grade);
+        this.grade = grade;
     }
 }

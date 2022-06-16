@@ -13,6 +13,8 @@ import pl.blukasz.langschool.users.User;
 
 import pl.blukasz.langschool.users.UserRole;
 import pl.blukasz.langschool.users.UserService;
+import pl.blukasz.langschool.users_course.UsersCourse;
+import pl.blukasz.langschool.users_course.UsersCourseService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -23,12 +25,10 @@ public class HomeController {
 
     @Autowired
     UserService userService;
-
     @Autowired
     CourseService courseService;
-
     @Autowired
-    MyUserDetailsService myUserDetailsService;
+    UsersCourseService usersCourseService;
 
     @GetMapping
     public String homeView(HttpServletRequest request){
@@ -46,19 +46,23 @@ public class HomeController {
 
 
     @GetMapping("/panel")
-    public String panelView(HttpServletRequest request){
+    public String panelView(HttpServletRequest request, Model model){
         User user = userService.getUserByUsername(request.getUserPrincipal().getName());
-        if(user.getRole().equals(UserRole.ADMIN)){
-            return "panel_admin";
-        }
-        if(user.getRole().equals(UserRole.TEACHER)){
-            return "panel_teacher";
-        }
-        if(user.getRole().equals(UserRole.CLERK)){
-            return "panel_clerk";
-        }
-        else
-            return "panel_student";
+        model.addAttribute("user", user);
+
+
+
+            if (user.getRole().equals(UserRole.ADMIN)) {
+                return "panel_admin";
+            }
+            if (user.getRole().equals(UserRole.TEACHER)) {
+                return "panel_teacher";
+            }
+            if (user.getRole().equals(UserRole.CLERK)) {
+                return "panel_clerk";
+            } else
+                return "panel_student";
+
 
 
     }
@@ -90,6 +94,7 @@ public class HomeController {
         return "courses";
 
     }
+
 
 
 

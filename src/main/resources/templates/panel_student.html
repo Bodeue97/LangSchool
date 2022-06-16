@@ -1,10 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>STUDENT PANEL</title>
 </head>
 <body>
+<h1 th:text="${'Hello '+ user.firstname}"/>
+
+<button onclick="location.href = 'http://localhost:8080/my_courses';" id="myCourses" class="float-left submit-button" >Show my courses</button>
+
+
+
 
 </body>
 </html>
