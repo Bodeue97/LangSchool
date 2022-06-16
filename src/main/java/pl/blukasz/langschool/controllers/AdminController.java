@@ -24,20 +24,23 @@ public class AdminController {
 
 
     @GetMapping("/panel/add_course")
-    public String addCourseView(){
+    public String addCourseView(Model model){
+        List<User> teachers = userService.getAllUsersByRole("teacher");
+        model.addAttribute("teachers", teachers);
 
         return "add_course_view";
     }
 
     @PostMapping("/panel/add_course")
-    public String addCourse(HttpServletRequest request){
+    public RedirectView addCourse(HttpServletRequest request){
        String courseName = request.getParameter("name");
        String description = request.getParameter("description");
        Double price = Double.parseDouble(request.getParameter("price"));
+       User teacher = userService.getUserByUsername(request.getParameter("teacherList"));
 
-       Course course = new Course(courseName,description,price);
+       Course course = new Course(courseName,description,price, teacher);
        courseService.addCourse(course);
-       return "add_course_view";
+       return new RedirectView("/panel/add_course");
 
     }
 
@@ -68,6 +71,7 @@ public class AdminController {
     public String showUpdateCourseView(Model model, HttpServletRequest request){
         List<Course> courses = courseService.getAllCourses();
         model.addAttribute("courses", courses);
+        model.addAttribute("teachers", userService.getAllUsersByRole("teacher"));
 
         return "courses_update";
     }
@@ -76,21 +80,24 @@ public class AdminController {
     public String chooseUpdateCourse(HttpServletRequest request, Model model){
         Course course = courseService.getCourseByName(request.getParameter("edit"));
        model.addAttribute("course", course);
+        model.addAttribute("teachers", userService.getAllUsersByRole("teacher"));
+
         return "courses_update_spec";
 
 
     }
 
     @GetMapping("/courses_update_spec")
-    public String updateCourseView(){
+    public String updateCourseView(Model model){
+
+
         return "courses_update_spec";
     }
 
     @PostMapping("/courses_update_spec")
     public String updateCourse(HttpServletRequest request){
 
-
-        courseService.updateCourse(Long.valueOf(request.getParameter("id")), request.getParameter("courseName"), request.getParameter("description"), Double.parseDouble(request.getParameter("price")));
+        courseService.updateCourse(Long.valueOf(request.getParameter("id")), request.getParameter("courseName"), request.getParameter("description"), Double.parseDouble(request.getParameter("price")), userService.getUserByUsername(request.getParameter("teacherList") ));
 
         return "course_update_success";
 

@@ -1,10 +1,9 @@
 package pl.blukasz.langschool.course;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import pl.blukasz.langschool.users.User;
+
+import javax.persistence.*;
 
 @Entity
 public class Course {
@@ -15,14 +14,17 @@ public class Course {
     private String courseName;
     private String description;
     private Double price;
+    @OneToOne
+    private User teacher;
 
     public Course() {
     }
 
-    public Course(String courseName, String description, Double price) {
+    public Course(String courseName, String description, Double price, User teacher) {
         this.courseName = courseName;
         this.description = description;
         this.price = price;
+        this.teacher = teacher;
     }
 
     public Long getId() {
@@ -52,5 +54,13 @@ public class Course {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public User getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(User teacher) {
+        this.teacher = teacher;
     }
 }

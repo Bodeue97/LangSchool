@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -16,12 +17,17 @@
     price:
     <input type="number" step="0.01" name="price">
 
+    teacher:
+    <select name="teacherList" id="teacherList">
+        <option th:each="teacher: ${teachers}" th:value="${teacher.username}" th:text="${teacher.username}"></option>
+    </select>
+
     <input  type="submit" value="Add">
 
 
 </form>
 
-<button onclick="location.href = 'http://localhost:8080/courses_admin';" id="showCourses" class="float-center submit-button" >Show courses</button>
+<button onclick="location.href = 'http://localhost:8080/courses';" id="showCourses" class="float-center submit-button" >Show courses</button>
 <button onclick="location.href = 'http://localhost:8080/panel';" id="back" class="float-left submit-button" >Back</button>
 
 

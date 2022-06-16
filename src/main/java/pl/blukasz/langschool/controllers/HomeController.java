@@ -73,7 +73,7 @@ public class HomeController {
     public String register(HttpServletRequest request){
         User user = new User();
         user.setFirstname((request.getParameter("firstname")));
-        user.setLastName(request.getParameter("lastname"));
+        user.setLastname(request.getParameter("lastname"));
         user.setUsername(request.getParameter("username"));
         user.setPassword(request.getParameter("password"));
         userService.registerUser(user);

@@ -6,7 +6,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 @Service
@@ -31,7 +33,7 @@ public class UserService{
     public User registerUser(User user)  {
         User registerUser = new User();
         registerUser.setFirstname(user.getFirstname());
-        registerUser.setLastName(user.getLastName());
+        registerUser.setLastname(user.getLastname());
         registerUser.setUsername(user.getUsername());
         String password = passwordEncoder.encode(user.getPassword());
         registerUser.setPassword(password);
@@ -48,7 +50,16 @@ public class UserService{
         user.setRole(role);
         userRepository.save(user);
 
+
     }
 
+
+
+    public List<User> getAllUsersByRole(String role){
+
+        return userRepository.findAllByRole(UserRole.valueOf(role.toUpperCase()));
+
+
+    }
 
 }

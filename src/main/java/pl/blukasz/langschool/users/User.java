@@ -15,7 +15,7 @@ public class User {
 
     private String firstname;
 
-    private String lastName;
+    private String lastname;
 
     private String username;
 
@@ -35,9 +35,9 @@ public class User {
     public User() {
     }
 
-    public User(String firstname, String lastName, String username, String password, UserRole role, boolean active) {
+    public User(String firstname, String lastname, String username, String password, UserRole role, boolean active) {
         this.firstname = firstname;
-        this.lastName = lastName;
+        this.lastname = lastname;
         this.username = username;
         this.password = password;
         this.role = role;
@@ -65,12 +65,12 @@ public class User {
         this.firstname = firstname;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLastname(String lastName) {
+        this.lastname = lastName;
     }
 
     public String getUsername() {
@@ -96,4 +96,6 @@ public class User {
     public void setRole(UserRole role) {
         this.role = role;
     }
+
+
 }

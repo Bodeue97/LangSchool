@@ -15,6 +15,7 @@
             <th scope="col">Name</th>
             <th scope="col">Description</th>
             <th scope="col">Price</th>
+            <th scope="col">Teacher</th>
         </tr>
         </thead>
         <tbody>
@@ -22,9 +23,11 @@
             <td th:text="${course.courseName}"/>
             <td th:text="${course.description}"/>
             <td th:text="${course.price}"/>
+            <td th:text="${course.teacher.username}"/>
             <td>
                 <button  name="edit"  th:value="${course.courseName}" type="submit">edit</button>
             </td>
+            <input type="hidden" name="teachers" th:field="${teachers}" readonly/>
 
 
 

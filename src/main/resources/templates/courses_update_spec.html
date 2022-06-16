@@ -12,6 +12,9 @@
     <textarea name="courseName" th:field="${course.courseName}"></textarea>
     <textarea name="description" th:field="${course.description}"></textarea>
     <textarea name="price" th:field="${course.price}"></textarea>
+    <select name="teacherList" id="teacherList">
+        <option th:each="teacher: ${teachers}" th:value="${teacher.username}" th:text="${teacher.username}"></option>
+    </select>
     <button type="submit">Update</button>
 
 
