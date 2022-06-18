@@ -68,7 +68,7 @@ public class AdminController {
     }
 
     @GetMapping("/courses_update")
-    public String showUpdateCourseView(Model model, HttpServletRequest request){
+    public String showUpdateCourseView(Model model){
         List<Course> courses = courseService.getAllCourses();
         model.addAttribute("courses", courses);
         model.addAttribute("teachers", userService.getAllUsersByRole("teacher"));

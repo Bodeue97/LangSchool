@@ -12,9 +12,12 @@ import java.util.Optional;
 public interface UsersCourseRepository extends JpaRepository<UsersCourse, Long> {
 
    Optional<List<UsersCourse>> getAllUsersCourseByStudent(User student);
+
    UsersCourse findByStudentAndCourse(User student, Course course);
 
+   List<UsersCourse> findAllByCourse(Course course);
 
+   List<UsersCourse> findAllByCourseIn(List<Course> courseList);
 
 
 }

@@ -30,11 +30,31 @@ public class UsersCourseService {
 
     }
 
+
+    public void setFinalGrade(Double finalGrade, UsersCourse usersCourse){
+        usersCourseRepository.findByStudentAndCourse(usersCourse.getStudent(), usersCourse.getCourse()).setFinalGrade(finalGrade);
+
+
+
+
+    }
+
     public List<UsersCourse> getUsersCourse(User student) throws EntityNotFoundException {
         Optional<List<UsersCourse>> usersCourses = usersCourseRepository.getAllUsersCourseByStudent(student);
         usersCourses.orElseThrow(()-> new EntityNotFoundException("User has no courses"));
 
        return usersCourses.get();
+
+    }
+
+    public List<UsersCourse> getAllUsersCourseByCourse(Course course){
+
+        return usersCourseRepository.findAllByCourse(course);
+
+    }
+
+    public List<UsersCourse> getAllUsersCourseByCourses(List<Course> courseList){
+        return usersCourseRepository.findAllByCourseIn(courseList);
 
     }
 

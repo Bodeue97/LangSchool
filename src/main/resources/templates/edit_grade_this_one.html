@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>This one</title>
+</head>
+<body>
+
+<form action="/edit_grade_this_one" method="post">
+    <input type="hidden" name="id" th:field="${grade.id}" readonly/>
+    <input type="number" name="newVal" th:field="${grade.grade}"/>
+    <button type="submit">Update</button>
+</form>
+</body>
+</html>

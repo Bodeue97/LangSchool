@@ -12,6 +12,7 @@ import pl.blukasz.langschool.course.Course;
 import pl.blukasz.langschool.course.CourseService;
 import pl.blukasz.langschool.users.User;
 import pl.blukasz.langschool.users.UserService;
+import pl.blukasz.langschool.users_course.UsersCourse;
 import pl.blukasz.langschool.users_course.UsersCourseService;
 
 import javax.servlet.http.HttpServletRequest;

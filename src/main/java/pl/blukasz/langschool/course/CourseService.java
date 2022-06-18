@@ -29,8 +29,11 @@ public class CourseService {
         course.orElseThrow(()->new EntityNotFoundException("Course with name " + courseName + " not found"));
         return course.get();
 
+    }
 
+    public List<Course> getAllByTeacher(User teacher){
 
+        return courseRepository.findAllByTeacher(teacher);
 
     }
 

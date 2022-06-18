@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add grade</title>
+</head>
+<body>
+<form action="/add_grade_spec" method="post">
+
+
+    <text th:text="${'Choose grade to add for student ' + gradedStudent.firstname + ' ' + gradedStudent.lastname}"/>
+    <input type="hidden" name="student" th:value="${gradedStudent.username}">
+    <button type="submit" name="grade" value="2">2</button>
+    <button type="submit" name="grade" value="3">3</button>
+    <button type="submit" name="grade" value="4">4</button>
+    <button type="submit" name="grade" value="5">5</button>
+
+</form>
+
+
+</body>
+</html>
