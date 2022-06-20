@@ -43,6 +43,11 @@ public class GradeService {
 
     }
 
+    public Double getAverage(User student, Course course){
+        List<Grade> grades = getAllGrades(student,course);
+        return grades.stream().mapToDouble(Grade::getGrade).sum() / grades.size();
+    }
+
 
 
 

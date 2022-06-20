@@ -4,6 +4,7 @@ package pl.blukasz.langschool.users_course;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.blukasz.langschool.course.Course;
+import pl.blukasz.langschool.course.CourseRepository;
 import pl.blukasz.langschool.grade.Grade;
 import pl.blukasz.langschool.users.User;
 
@@ -16,6 +17,7 @@ public class UsersCourseService {
 
     @Autowired
     UsersCourseRepository usersCourseRepository;
+
 
 
     public void buyCourse( User student, Course course){
@@ -34,8 +36,12 @@ public class UsersCourseService {
     }
 
 
-    public void setFinalGrade(Double finalGrade, UsersCourse usersCourse){
-        usersCourseRepository.findByStudentAndCourse(usersCourse.getStudent(), usersCourse.getCourse()).setFinalGrade(finalGrade);
+    public void setFinalGrade(Double finalGrade, UsersCourse uc){
+
+        UsersCourse usersCourse = usersCourseRepository.findById(uc.getId()).get();
+        usersCourse.setFinalGrade(finalGrade);
+        usersCourseRepository.save(usersCourse);
+
 
 
 

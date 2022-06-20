@@ -41,11 +41,8 @@ public class TeacherController {
 
     @GetMapping("/add_grades")
     public String addGradesView(HttpServletRequest request, Model model){
-        User teacher = userService.getUserByUsername(request.getRemoteUser());
-        List<Course> myCourses = courseService.getAllByTeacher(teacher);
-        List<UsersCourse> usersCourses = usersCourseService.getAllUsersCourseByCourses(myCourses);
-        List<User> myStudents = usersCourses.stream().map(UsersCourse::getStudent).collect(Collectors.toList());
-        model.addAttribute("students", myStudents);
+        List<User> students = getTeachersStudents(request.getRemoteUser());
+        model.addAttribute("students", students);
 
 
 
@@ -93,10 +90,7 @@ public class TeacherController {
 
     @GetMapping("/edit_grades")
     public String editGradesView(Model model, HttpServletRequest request){
-        User teacher = userService.getUserByUsername(request.getRemoteUser());
-        List<Course> teachersCourses = courseService.getAllByTeacher(teacher);
-        List<UsersCourse> teachersCoursesStudents = usersCourseService.getAllUsersCourseByCourses(teachersCourses);
-        List<User> students = teachersCoursesStudents.stream().map(UsersCourse::getStudent).collect(Collectors.toList());
+       List<User> students =  getTeachersStudents(request.getRemoteUser());
         model.addAttribute("students", students);
 
 
@@ -116,7 +110,6 @@ public class TeacherController {
     public String editStudentsGrades(HttpServletRequest request, Model model){
 
         Grade editThisGrade = gradeService.getGradeById(Long.valueOf(request.getParameter("editThis")));
-        System.out.println(editThisGrade.getGrade());
         model.addAttribute("editThisGrade",editThisGrade);
 
         return "edit_grade_spec";
@@ -127,7 +120,6 @@ public class TeacherController {
 
         Double newVal = Double.valueOf(request.getParameter("newVal"));
         Long id = Long.valueOf(request.getParameter("id"));
-        System.out.println(newVal + " " + id);
         gradeService.editGrade(newVal, id);
 
         return new RedirectView("/panel");
@@ -135,4 +127,50 @@ public class TeacherController {
 
     }
 
+
+
+    @GetMapping("/set_final_grades")
+    public String setFinalGradesView(){
+        return "grades_set";
+    }
+
+    @PostMapping("/set_grades")
+    public String setFinalGrades(HttpServletRequest request){
+
+        User teacher = userService.getUserByUsername(request.getRemoteUser());
+        List<Course> courses = courseService.getAllByTeacher(teacher);
+        List<User> students = getTeachersStudents(teacher.getUsername());
+        for (User s: students
+             ) {
+            List<UsersCourse> usersCourses = usersCourseService.getUsersCourse(s);
+            for (UsersCourse uc:usersCourses
+                 ) {
+
+                Double avg = gradeService.getAverage(s, uc.getCourse());
+                usersCourseService.setFinalGrade(avg, uc);
+            }
+        }
+
+
+
+        return "grades_are_set";
+    }
+
+
+
+
+
+
+
+
+
+
+
+    public List<User> getTeachersStudents(String teacherName){
+        User teacher = userService.getUserByUsername(teacherName);
+        List<Course> teachersCourses = courseService.getAllByTeacher(teacher);
+        List<UsersCourse> teachersCoursesStudents = usersCourseService.getAllUsersCourseByCourses(teachersCourses);
+        return    teachersCoursesStudents.stream().map(UsersCourse::getStudent).collect(Collectors.toList());
+
+    }
 }
