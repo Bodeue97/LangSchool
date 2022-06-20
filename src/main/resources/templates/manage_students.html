@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage students</title>
+</head>
+<body>
+<form action="/manage_students" method="post">
+    <table>
+        <thead>
+        <tr>
+            <th scope="col">Students' name</th>
+            <th scope="col">Students' last name</th>
+            <th scope="col">Students' email</th>
+            <th scope="col">Course</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="userscourse : ${usersCourses}">
+            <td th:text="${userscourse.student.firstname}"/>
+            <td th:text="${userscourse.student.lastname}"/>
+            <td th:text="${userscourse.student.username}"/>
+            <td th:text="${userscourse.course.courseName}"/>
+            <td><button type="submit" name="chosenUsersCourse" th:value="${userscourse.id}">Delete</button> </td>
+
+        </tr>
+        </tbody>
+    </table>
+
+</form>
+
+
+
+</body>
+</html>

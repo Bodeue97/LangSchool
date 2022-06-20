@@ -38,6 +38,7 @@ public class StartupEntitiesConfiguration {
             userRepository.save(admin);
             userRepository.save(student);
             userRepository.save(teacher);
+            userRepository.save(clerk);
             courseRepository.save(course);
             usersCourseRepository.save(usersCourse);
         };

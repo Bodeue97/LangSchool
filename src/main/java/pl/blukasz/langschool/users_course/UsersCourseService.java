@@ -67,12 +67,16 @@ public class UsersCourseService {
 
     }
 
-    public void setFinalGrade(List<Grade> grades, User student, Course course){
-        UsersCourse usersCourses = usersCourseRepository.findByStudentAndCourse(student,course);
-        Double finalGrade = grades.stream().mapToDouble(Grade::getGrade).sum();
-        usersCourses.setFinalGrade(finalGrade);
-        usersCourseRepository.save(usersCourses);
+    public List<UsersCourse> getAll(){
+        return usersCourseRepository.findAll();
+    }
 
+    public UsersCourse getUsersCourseById(Long id){
+        return usersCourseRepository.findById(id).get();
+    }
+
+    public void removeUsersCourse(Long id){
+        usersCourseRepository.delete(usersCourseRepository.findById(id).get());
     }
 
 
