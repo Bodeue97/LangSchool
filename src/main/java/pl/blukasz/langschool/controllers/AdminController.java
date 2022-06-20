@@ -88,7 +88,7 @@ public class AdminController {
     }
 
     @GetMapping("/courses_update_spec")
-    public String updateCourseView(Model model){
+    public String updateCourseView(){
 
 
         return "courses_update_spec";

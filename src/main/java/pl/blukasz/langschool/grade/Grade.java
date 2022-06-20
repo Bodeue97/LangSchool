@@ -20,6 +20,7 @@ public class Grade {
     public Grade(Double grade, User student, Course course) {
         this.grade = grade;
         this.student = student;
+        this.course = course;
     }
 
     public Grade() {

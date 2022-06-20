@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -92,62 +93,46 @@ public class TeacherController {
 
     @GetMapping("/edit_grades")
     public String editGradesView(Model model, HttpServletRequest request){
-
         User teacher = userService.getUserByUsername(request.getRemoteUser());
-        List<Course> myCourses = courseService.getAllByTeacher(teacher);
-        List<UsersCourse> usersCourses = usersCourseService.getAllUsersCourseByCourses(myCourses);
-        List<User> myStudents = usersCourses.stream().map(UsersCourse::getStudent).collect(Collectors.toList());
-        model.addAttribute("students", myStudents);
+        List<Course> teachersCourses = courseService.getAllByTeacher(teacher);
+        List<UsersCourse> teachersCoursesStudents = usersCourseService.getAllUsersCourseByCourses(teachersCourses);
+        List<User> students = teachersCoursesStudents.stream().map(UsersCourse::getStudent).collect(Collectors.toList());
+        model.addAttribute("students", students);
+
+
         return "edit_grades";
 
     }
-
     @PostMapping("/edit_grades")
-    public RedirectView editGrades(HttpServletRequest request, RedirectAttributes ra){
+    public String editGrades(HttpServletRequest request, Model model){
+        User student = userService.getUserByUsername(request.getParameter("edit"));
+        List<Grade> studentsGrades = gradeService.getAllStudentsGrades(student);
+        model.addAttribute("grades", studentsGrades);
+        return "edit_students_grades";
 
-        RedirectView rv =  new RedirectView("/edit_grade_spec");
-        ra.addAttribute("student",request.getParameter("edit"));
 
-        return rv;
     }
+    @PostMapping("/edit_students_grades")
+    public String editStudentsGrades(HttpServletRequest request, Model model){
 
-    @GetMapping("/edit_grade_spec")
-    public String editGradeSpecView(HttpServletRequest request, Model model, @RequestParam("student")String student){
-        model.addAttribute("gradedStudent", userService.getUserByUsername(student));
-        List<Grade> grades = gradeService.getAllStudentsGrades(userService.getUserByUsername(student));
+        Grade editThisGrade = gradeService.getGradeById(Long.valueOf(request.getParameter("editThis")));
+        System.out.println(editThisGrade.getGrade());
+        model.addAttribute("editThisGrade",editThisGrade);
 
-        model.addAttribute("grades", grades);
-        System.out.println(grades);
         return "edit_grade_spec";
-
     }
+
     @PostMapping("/edit_grade_spec")
-    public RedirectView editGradeSpec(HttpServletRequest request, RedirectAttributes ra){
+    public RedirectView editThisGrade(HttpServletRequest request){
 
-        RedirectView rv = new RedirectView("/edit_grade_this_one");
-        ra.addAttribute("gradeId", request.getParameter("editGrade"));
-        return rv;
+        Double newVal = Double.valueOf(request.getParameter("newVal"));
+        Long id = Long.valueOf(request.getParameter("id"));
+        System.out.println(newVal + " " + id);
+        gradeService.editGrade(newVal, id);
 
-    }
-
-    @GetMapping("/edit_grade_this_one")
-    public String thisOne(Model model, @RequestParam("gradeId")String gradeStr){
-
-        Grade grade = gradeService.getGradeById(Long.parseLong(gradeStr));
-        model.addAttribute("grade", grade);
-
-        return "edit_grade_this_one";
-    }
-
-    @PostMapping("/edit_grade_this_one")
-    public RedirectView thisOneDone(HttpServletRequest request){
-
-        gradeService.editGrade(Double.valueOf(request.getParameter("newVal")), Long.parseLong(request.getParameter("id")));
         return new RedirectView("/panel");
+
+
     }
-
-
-
-
 
 }

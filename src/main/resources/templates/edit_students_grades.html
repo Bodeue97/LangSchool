@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit students grades</title>
+</head>
+<body>
+
+<form action="/edit_students_grades" method="post">
+    <table>
+        <thead>
+        <tr>
+            <th scope="col">Grade</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="grade: ${grades}">
+            <td th:text="${grade.grade}"/>
+            <td><button type="submit" name="editThis" th:value="${grade.id}">Edit</button></td>
+
+        </tr>
+        </tbody>
+    </table>
+</form>
+
+</body>
+</html>

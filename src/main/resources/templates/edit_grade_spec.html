@@ -3,25 +3,13 @@
       xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Edit grade</title>
+    <title>Edit grade spec</title>
 </head>
 <body>
-
-<form method="post" action="/edit_grade_spec">
-    <table>
-        <thead>
-        <tr>
-            <th scope="col">Grades</th>
-        </tr>
-        </thead>
-        <tbody>
-            <tr th:each="grade: ${grades}">
-                <td th:text="${grade.grade}"/>
-            <td><button type="submit" name="editGrade" th:value="${grade.id}"/>Edit</td>
-            </tr>
-        </tbody>
-    </table>
+<form action="/edit_grade_spec" method="post">
+    <input type="text"  name="newVal" th:value="${editThisGrade.grade}"/>
+    <input type="hidden" th:value="${editThisGrade.id}" name="id"/>
+    <button type="submit">Update</button>
 </form>
-
 </body>
 </html>

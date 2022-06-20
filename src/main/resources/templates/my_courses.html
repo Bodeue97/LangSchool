@@ -7,7 +7,7 @@
 </head>
 <body>
 
-
+<form action="/my_courses" method="post">
 <table>
     <thead>
     <tr>
@@ -15,7 +15,7 @@
         <th scope="col">Description</th>
         <th scope="col">Teachers' name</th>
         <th scope="col">Teachers' last name</th>
-        <th scope="col">Grade</th>
+        <th scope="col">Final grade</th>
     </tr>
     </thead>
     <tbody>
@@ -25,12 +25,13 @@
         <td th:text="${course.course.teacher.firstname}"/>
         <td th:text="${course.course.teacher.lastname}"/>
         <td th:text="${course.finalGrade}"/>
+        <td><button type="submit" name="thisCourse" th:value="${course.course.courseName}">Show grades</button></td>
     </tr>
     </tbody>
 
 
 </table>
-
+</form>
 
 </body>
 </html>

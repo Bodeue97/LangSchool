@@ -3,13 +3,10 @@ package pl.blukasz.langschool.grade;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import pl.blukasz.langschool.course.Course;
 import pl.blukasz.langschool.users.User;
-
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class GradeService {
@@ -30,6 +27,7 @@ public class GradeService {
     }
 
     public void addNewGrade(Double grade, User student, Course course){
+        System.out.println(grade + " addNewGrade");
         gradeRepository.save(new Grade(grade, student, course));
     }
 
@@ -39,6 +37,7 @@ public class GradeService {
         System.out.println(grade.getGrade());
         grade.setGrade(edit);
         System.out.println(grade.getGrade());
+        gradeRepository.save(grade);
 
 
 

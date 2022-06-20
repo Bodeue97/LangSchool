@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My grades</title>
+</head>
+<body>
+
+<table>
+    <thead>
+    <tr>
+       <th scope="col">Grades:</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="grade: ${grades}">
+    <td th:text="${grade}"/>
+    </tr>
+    </tbody>
+</table>
+<button onclick="location.href='http://localhost:8080/my_courses';">Back</button>
+
+</body>
+</html>

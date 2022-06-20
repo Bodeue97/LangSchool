@@ -4,6 +4,7 @@ package pl.blukasz.langschool.users_course;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.blukasz.langschool.course.Course;
+import pl.blukasz.langschool.grade.Grade;
 import pl.blukasz.langschool.users.User;
 
 import javax.persistence.EntityNotFoundException;
@@ -20,9 +21,11 @@ public class UsersCourseService {
     public void buyCourse( User student, Course course){
         UsersCourse purchase = new UsersCourse(student, course);
         if(usersCourseRepository.findByStudentAndCourse(student, course) != null){
-            System.out.println("You already have this course");
+
 
         }else{
+            purchase.setStudent(student);
+            purchase.setCourse(course);
             usersCourseRepository.save(purchase);
         }
 
@@ -58,6 +61,13 @@ public class UsersCourseService {
 
     }
 
+    public void setFinalGrade(List<Grade> grades, User student, Course course){
+        UsersCourse usersCourses = usersCourseRepository.findByStudentAndCourse(student,course);
+        Double finalGrade = grades.stream().mapToDouble(Grade::getGrade).sum();
+        usersCourses.setFinalGrade(finalGrade);
+        usersCourseRepository.save(usersCourses);
+
+    }
 
 
 }
