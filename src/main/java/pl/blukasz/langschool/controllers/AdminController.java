@@ -11,6 +11,10 @@ import pl.blukasz.langschool.users.User;
 import pl.blukasz.langschool.users.UserRole;
 import pl.blukasz.langschool.users.UserService;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -105,19 +109,28 @@ public class AdminController {
     }
 
     @GetMapping("/edit_user_role")
-    public String editUserRoleView(Model model){
-        List<User> users = userService.getAllUsers();
-        model.addAttribute("users", users);
+    public String editUserRoleView(Model model, HttpServletRequest request) {
+        if (request.getParameter("user") == null || request.getParameter("user").equals("email")) {
+            List<User> users = userService.getAllUsers();
+            model.addAttribute("users", users);
+        }
+        else{
+            User user = userService.getUserByUsername(request.getParameter("user"));
+            List<User> users = Arrays.asList(user);
+            model.addAttribute("users", users);
+
+        }
 
 
         return "edit_role_view";
     }
 
     @PostMapping("/edit_user_role")
-    public RedirectView editUserRole(HttpServletRequest request){
+    public RedirectView editUserRole(HttpServletRequest request)  {
 
         if(request.getParameter("setTeacher") != null){
             userService.editUserRole(UserRole.TEACHER, userService.getUserByUsername(request.getParameter("setTeacher")));
+
 
 
         }
@@ -129,9 +142,15 @@ public class AdminController {
             userService.editUserRole(UserRole.CLERK, userService.getUserByUsername(request.getParameter("setClerk")));
         }
 
+        RedirectView rv = new RedirectView("/edit_user_role");
+        if( request.getParameter("search") != null) {
+            rv.getAttributesMap().put("user", request.getParameter("search"));
+        }else{
+            rv.getAttributesMap().put("user", "email");
+        }
 
 
-        return  new RedirectView("/edit_user_role");
+        return  rv;
 
     }
 
